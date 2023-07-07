@@ -1,6 +1,10 @@
 <div class="container">
   <div class="login">
-    <form class="needs-validation" [formGroup]="createAccountForm">
+    <form
+      class="needs-validation"
+      [formGroup]="createAccountForm"
+      (ngSubmit)="addAcount(createAccountForm)"
+    >
       <img
         src="../assets/img/logo-timisoara-2023.png"
         class="img-capitala-europeana"
@@ -131,7 +135,7 @@
         </div>
       </div>
       <button
-        type="button"
+        type="submit"
         class="btn-login btn btn-primary btn-rounded"
         [disabled]="!buttonEnabled"
       >

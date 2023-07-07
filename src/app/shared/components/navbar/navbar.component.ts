@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { NavbarService } from 'src/app/services/navbar-service/navbar.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +20,7 @@ export class NavbarComponent implements OnInit {
   isAdmin: boolean = false;
   clickFavorite: boolean = false;
   clickHome: boolean = true;
+  matchingUser: User[];
 
   // private isConfirmedSubscription: Subscription;
   // private isAdminSubscription: Subscription;
@@ -26,8 +29,8 @@ export class NavbarComponent implements OnInit {
     private searchCardsService: SearchService,
     private dialogService: DialogService,
     private router: Router,
-    private authService: AuthService,
-    private navbarService: NavbarService
+    private navbarService: NavbarService,
+    private userService: UsersService
   ) {
     // this.isConfirmedSubscription = this.authService
     //   .isConfirmObservable()
@@ -42,8 +45,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.isAdmin;
-    this.isConfirmed = this.authService.isConfirm;
+    this.userService.searchUser(this.searchCards).subscribe((data) => {
+      this.matchingUser = data;
+      console.log(this.matchingUser);
+    });
 
     // this.authService.isAdminObservable().subscribe((isAdmin) => {
     //   this.isAdmin = isAdmin;
@@ -63,6 +68,11 @@ export class NavbarComponent implements OnInit {
 
   sendSearchCards() {
     this.searchCardsService.search(this.searchCards);
+
+    this.userService.searchUser(this.searchCards).subscribe((data) => {
+      this.matchingUser = data;
+      console.log(this.matchingUser);
+    });
   }
   openModal() {
     this.dialogService.openMyAccountDialog();

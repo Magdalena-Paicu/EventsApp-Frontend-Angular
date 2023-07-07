@@ -6,7 +6,6 @@ export interface Card {
   imageURL: string;
   startDateTime: Date;
   endDateTime: Date;
-  startTime: Date;
   duration: Date;
   address: string;
   eventLink: string;

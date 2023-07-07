@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormCheckbox } from 'src/app/model/form-checkbox.model';
 import { FormInputBase } from 'src/app/model/form-input-base.model';
 import { FormTextbox } from 'src/app/model/form-textbox.model';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-create-account',
@@ -11,7 +12,7 @@ import { FormTextbox } from 'src/app/model/form-textbox.model';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class CreateAccountComponent {
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private usersService: UsersService) {
     this.createAccountForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       username: [
@@ -175,5 +176,12 @@ export class CreateAccountComponent {
   }
   clickShowPassword() {
     this.showPassword = !this.showPassword;
+  }
+  addAcount(form: FormGroup) {
+    this.usersService.postUser(form.value).subscribe({
+      next() {
+        console.log(form.value);
+      },
+    });
   }
 }
