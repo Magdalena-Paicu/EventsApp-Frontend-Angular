@@ -13,6 +13,7 @@
                 hasPassed(event)
             }"
             [src]="event.imageURL"
+            (click)="navigateToEventDetail(event.id)"
           />
           <div
             *ngIf="!isConfirmed || (isConfirmed && !isAdmin)"
@@ -64,6 +65,7 @@
               hasPassed(event)
           }"
           [src]="event.imageURL"
+          (click)="navigateToEventDetail(event.id)"
         />
         <div class="grid-container__event-card__container__buttons-login">
           <button

@@ -6,6 +6,7 @@ import { DeletingEventDialogComponent } from 'src/app/shared/components/deleting
 import { DraftSavedDialogComponent } from 'src/app/shared/components/draft-saved-dialog/draft-saved-dialog/draft-saved-dialog.component';
 import { EventPostedDialogComponent } from 'src/app/shared/components/event-posted-dialog/event-posted-dialog/event-posted-dialog.component';
 import { MyAccountDialogComponent } from 'src/app/shared/components/my-account-dialog/my-account-dialog/my-account-dialog.component';
+import { AddNewEventComponent } from 'src/app/shared/components/add-new-event/add-new-event/add-new-event.component';
 
 @Injectable({
   providedIn: 'root',
@@ -61,5 +62,13 @@ export class DialogService {
     dialogConfig.position = {};
 
     this.dialog.open(MyAccountDialogComponent, dialogConfig);
+  }
+  openNewEventDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '1300px';
+    dialogConfig.height = '900px';
+    dialogConfig.position = {};
+
+    this.dialog.open(AddNewEventComponent, dialogConfig);
   }
 }

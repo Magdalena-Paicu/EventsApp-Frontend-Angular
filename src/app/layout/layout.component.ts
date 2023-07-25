@@ -3,6 +3,7 @@ import { SearchService } from '../services/search-service/search.service';
 import { ViewEncapsulation } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { AuthService } from '../services/auth-services/auth.service';
+import { DialogService } from '../services/dialog-service/dialog.service';
 
 @Component({
   selector: 'app-layout',
@@ -12,8 +13,8 @@ import { AuthService } from '../services/auth-services/auth.service';
 })
 export class LayoutComponent implements OnInit {
   constructor(
-    private searchService: SearchService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialogService: DialogService
   ) {}
 
   selectedToggle: string = 'all-events';
@@ -103,6 +104,10 @@ export class LayoutComponent implements OnInit {
       },
     ],
   };
+
+  openNewEventDialog() {
+    this.dialogService.openNewEventDialog();
+  }
 
   ngOnInit(): void {
     this.selectedCards = this.selectedToggle;

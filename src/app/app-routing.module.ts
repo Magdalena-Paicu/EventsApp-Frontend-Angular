@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RecoverAccountComponent } from './components/recover-account/recover-account.component';
+import { EventPageDetailsComponent } from './components/event-page-details/event-page-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'create-account', component: CreateAccountComponent },
   { path: 'home-page', component: HomePageComponent },
   { path: 'recover-account', component: RecoverAccountComponent },
+  { path: 'event-details/:idEvent', component: EventPageDetailsComponent },
 ];
 
 @NgModule({

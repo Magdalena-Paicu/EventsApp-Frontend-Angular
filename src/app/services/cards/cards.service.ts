@@ -847,4 +847,10 @@ export class CardsService {
       };
     });
   }
+  getCardById(id: any) {
+    const cards: Card[] = this.getMyCards();
+    return cards.find((card) => {
+      card.id === id;
+    });
+  }
 }

@@ -96,7 +96,9 @@
       <img src="./assets/img/logo-ness.png" />
     </div>
   </div>
+
   <div class="right" [ngClass]="{ 'right-admin': isAdmin }">
+    <!-- <div *ngFor="let event of eventsDeleted"> {{ event }}</div> -->
     <div class="content-navbar">
       <mat-button-toggle-group
         *ngIf="isAdmin"
@@ -120,7 +122,11 @@
           All Events</mat-button-toggle
         >
       </mat-button-toggle-group>
-      <button *ngIf="isAdmin" class="button-add-event">
+      <button
+        *ngIf="isAdmin"
+        class="button-add-event"
+        (click)="openNewEventDialog()"
+      >
         <mat-icon class="add-icon" svgIcon="add"></mat-icon>Add New Event
       </button>
     </div>

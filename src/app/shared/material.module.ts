@@ -36,11 +36,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { FormatDatePipe } from './pipes/format-date.pipe';
+import { AddNewEventComponent } from './components/add-new-event/add-new-event/add-new-event.component';
 
 
 @NgModule({
   declarations: [
     FormatDatePipe,
+    AddNewEventComponent,
   
   ],
   exports: [

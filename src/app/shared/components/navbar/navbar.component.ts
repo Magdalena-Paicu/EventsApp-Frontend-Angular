@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
@@ -21,6 +22,7 @@ export class NavbarComponent implements OnInit {
   clickFavorite: boolean = false;
   clickHome: boolean = true;
   matchingUser: User[];
+  imageSrc: SafeUrl;
 
   // private isConfirmedSubscription: Subscription;
   // private isAdminSubscription: Subscription;
@@ -45,11 +47,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.searchUser(this.searchCards).subscribe((data) => {
-      this.matchingUser = data;
-      console.log(this.matchingUser);
-    });
-
+    // this.userService.searchUser(this.searchCards).subscribe((data) => {
+    //   this.matchingUser = data;
+    //   console.log(this.matchingUser);
+    // });
     // this.authService.isAdminObservable().subscribe((isAdmin) => {
     //   this.isAdmin = isAdmin;
     // });

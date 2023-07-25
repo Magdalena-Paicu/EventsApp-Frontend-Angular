@@ -29,6 +29,7 @@ import { MyAccountDialogComponent } from './shared/components/my-account-dialog/
 import { RecoverAccountComponent } from './components/recover-account/recover-account.component';
 import { DatePipe } from '@angular/common';
 import { FormatDatePipe } from './shared/pipes/format-date.pipe';
+import { EventPageDetailsComponent } from './components/event-page-details/event-page-details.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { FormatDatePipe } from './shared/pipes/format-date.pipe';
     CreateAccountComponent,
     MyAccountDialogComponent,
     RecoverAccountComponent,
-    
+    EventPageDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,10 +66,10 @@ import { FormatDatePipe } from './shared/pipes/format-date.pipe';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
   ],
 
-  providers: [DatePipe,FormatDatePipe],
+  providers: [DatePipe, FormatDatePipe],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
