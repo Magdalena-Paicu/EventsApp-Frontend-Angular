@@ -31,6 +31,7 @@ export class HomePageComponent implements OnInit {
       console.log(data);
     });
   }
+
   loadImageByName(fileName: string) {
     this.imageUpload.getImagebyName(fileName).subscribe(
       (blob: Blob) => {
@@ -43,7 +44,5 @@ export class HomePageComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    // this.loadImageByName('foto');
-  }
+  ngOnInit(): void {}
 }

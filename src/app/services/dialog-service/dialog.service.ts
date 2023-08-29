@@ -7,6 +7,7 @@ import { DraftSavedDialogComponent } from 'src/app/shared/components/draft-saved
 import { EventPostedDialogComponent } from 'src/app/shared/components/event-posted-dialog/event-posted-dialog/event-posted-dialog.component';
 import { MyAccountDialogComponent } from 'src/app/shared/components/my-account-dialog/my-account-dialog/my-account-dialog.component';
 import { AddNewEventComponent } from 'src/app/shared/components/add-new-event/add-new-event/add-new-event.component';
+import { ForgetPasswordDialogComponent } from 'src/app/shared/components/forget-password-dialog/forget-password-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -70,5 +71,13 @@ export class DialogService {
     dialogConfig.position = {};
 
     this.dialog.open(AddNewEventComponent, dialogConfig);
+  }
+  openForgetPasswordDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '20%';
+    dialogConfig.height = '20%';
+    dialogConfig.position = {};
+
+    this.dialog.open(ForgetPasswordDialogComponent, dialogConfig);
   }
 }

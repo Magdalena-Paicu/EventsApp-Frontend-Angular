@@ -98,7 +98,7 @@
         mat-raised-button
         type="submit"
         [disabled]="!buttonEnabled"
-        (click)="onSubmit()"
+        (click)="login()"
       >
         LOGIN
       </button>
@@ -110,6 +110,9 @@
           style="text-decoration: none; cursor: pointer"
           >Create account.</a
         >
+      </p>
+      <p class="forget-password" (click)="openForgetDialog()">
+        Forget password.
       </p>
       <img
         src="../../../assets/img/logo-ness.png"

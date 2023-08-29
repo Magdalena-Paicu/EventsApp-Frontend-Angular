@@ -1,18 +1,24 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormCheckbox } from 'src/app/model/form-checkbox.model';
 import { FormInputBase } from 'src/app/model/form-input-base.model';
 import { FormTextbox } from 'src/app/model/form-textbox.model';
 import { UsersService } from 'src/app/services/users/users.service';
+import { MAT_SNACK_BAR_DATA, MatSnackBar } from '@angular/material/snack-bar';
+import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
 })
 export class CreateAccountComponent {
-  constructor(private fb: FormBuilder, private usersService: UsersService) {
+  constructor(
+    private fb: FormBuilder,
+    private usersService: UsersService,
+    private snackBar: MatSnackBar,
+    private dialog: DialogService
+  ) {
     this.createAccountForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       username: [
@@ -178,10 +184,16 @@ export class CreateAccountComponent {
     this.showPassword = !this.showPassword;
   }
   addAcount(form: FormGroup) {
-    this.usersService.postUser(form.value).subscribe({
-      next() {
-        console.log(form.value);
-      },
+    this.usersService.registerUser(form.value).subscribe((value) => {
+      // this.dialog.openEventPostedDialog();
+      console.log(value);
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 30000,
+      panelClass: ['snack-bar-class'],
+      data: { icon: 'check-circle-2' },
     });
   }
 }

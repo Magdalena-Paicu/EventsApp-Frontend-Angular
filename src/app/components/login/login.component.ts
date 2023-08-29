@@ -1,20 +1,24 @@
+import { Dialog } from '@angular/cdk/dialog';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
+import { DialogService } from 'src/app/services/dialog-service/dialog.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
 })
 export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private usersService: UsersService,
+    private dialog: DialogService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -91,15 +95,19 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  submitForm() {}
-
-  correctPassword() {
-    for (const user of this.allUsers) {
-      if (user.password === this.password) {
-        return true;
-      }
-    }
-    return false;
+  login() {
+    this.usersService
+      .authenticatedLogin(this.loginForm.value)
+      .subscribe((response) => {
+        this.router.navigate(['/home-page']);
+        this.usersService.storeToken(response.token);
+      });
   }
-  ngOnInit(): void {}
+  openForgetDialog() {
+    this.dialog.openForgetPasswordDialog();
+  }
+
+  ngOnInit(): void {
+    console.log(this.usersService.isLoggedIn());
+  }
 }

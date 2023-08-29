@@ -5,6 +5,7 @@ import { CreateAccountComponent } from './components/create-account/create-accou
 import { HomePageComponent } from './home-page/home-page.component';
 import { RecoverAccountComponent } from './components/recover-account/recover-account.component';
 import { EventPageDetailsComponent } from './components/event-page-details/event-page-details.component';
+import { AuthGuard } from './components/guards/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

@@ -4,4 +4,5 @@ export interface User {
   password: string;
   is_admin: boolean;
   is_confirmed: boolean;
+  token: string;
 }

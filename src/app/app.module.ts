@@ -30,7 +30,9 @@ import { RecoverAccountComponent } from './components/recover-account/recover-ac
 import { DatePipe } from '@angular/common';
 import { FormatDatePipe } from './shared/pipes/format-date.pipe';
 import { EventPageDetailsComponent } from './components/event-page-details/event-page-details.component';
-
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { NgToastModule } from 'ng-angular-popup';
+import { ForgetPasswordDialogComponent } from './shared/components/forget-password-dialog/forget-password-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,7 @@ import { EventPageDetailsComponent } from './components/event-page-details/event
     MyAccountDialogComponent,
     RecoverAccountComponent,
     EventPageDetailsComponent,
+    ForgetPasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,15 +64,19 @@ import { EventPageDetailsComponent } from './components/event-page-details/event
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
     MatCardModule,
     MatIconModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    NgToastModule,
   ],
 
-  providers: [DatePipe, FormatDatePipe],
+  providers: [
+    DatePipe,
+    FormatDatePipe,
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

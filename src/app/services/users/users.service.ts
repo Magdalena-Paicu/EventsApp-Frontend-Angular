@@ -16,8 +16,31 @@ export class UsersService {
     return this.http.get<User[]>(this.baseApiUrl + '/api/Users');
   }
 
-  postUser(user: User): Observable<User> {
-    return this.http.post<User>(this.baseApiUrl + '/api/Users', user);
+  registerUser(user: User): Observable<User> {
+    return this.http.post<User>(this.baseApiUrl + '/api/Users/register', user);
+  }
+
+  authenticatedLogin(user: User): Observable<User> {
+    return this.http.post<User>(
+      this.baseApiUrl + '/api/Users/authenticate',
+      user
+    );
+  }
+
+  storeToken(tokenValue: string) {
+    localStorage.setItem('token', tokenValue);
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  clearToken() {
+    localStorage.removeItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 
   searchUser(username: string): Observable<User[]> {

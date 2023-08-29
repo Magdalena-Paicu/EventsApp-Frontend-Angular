@@ -1,9 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { NavbarService } from 'src/app/services/navbar-service/navbar.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
@@ -23,6 +21,7 @@ export class NavbarComponent implements OnInit {
   clickHome: boolean = true;
   matchingUser: User[];
   imageSrc: SafeUrl;
+  users: User[] = [];
 
   // private isConfirmedSubscription: Subscription;
   // private isAdminSubscription: Subscription;
@@ -47,6 +46,11 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isConfirmed = this.userService.isLoggedIn();
+    // this.userService.getAllUsers().subscribe((value) => {
+    //   this.users = value;
+    //   console.log(this.users);
+    // });
     // this.userService.searchUser(this.searchCards).subscribe((data) => {
     //   this.matchingUser = data;
     //   console.log(this.matchingUser);
@@ -80,6 +84,7 @@ export class NavbarComponent implements OnInit {
   }
   logout() {
     this.router.navigate(['login']);
+    this.userService.clearToken();
   }
   login() {
     this.router.navigate(['login']);

@@ -37,13 +37,14 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { FormatDatePipe } from './pipes/format-date.pipe';
 import { AddNewEventComponent } from './components/add-new-event/add-new-event/add-new-event.component';
-
+import { SuccessSnackbarComponent } from './components/snackbars/success-snackbar/success-snackbar.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     FormatDatePipe,
     AddNewEventComponent,
-  
+    SuccessSnackbarComponent,
   ],
   exports: [
     MatAutocompleteModule,
@@ -83,8 +84,7 @@ import { AddNewEventComponent } from './components/add-new-event/add-new-event/a
     MatSortModule,
     MatTableModule,
     FormatDatePipe,
-    
-    
+    FormsModule,
   ],
   providers: [MatIconRegistry],
 })
