@@ -1,11 +1,13 @@
-import { Dialog } from '@angular/cdk/dialog';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { UsersService } from 'src/app/services/users/users.service';
+import { NotificationToastComponent } from 'src/app/shared/components/notification-toast/notification-toast.component';
+import { ResetPasswordService } from 'src/app/services/reset-password/reset-password.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private usersService: UsersService,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private _snackBar: MatSnackBar,
+    private resetService: ResetPasswordService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,6 +36,7 @@ export class LoginComponent implements OnInit {
   email: string = '';
   showPassword: boolean = false;
   allUsers: User[] = this.authService.users;
+  messageResponse: string;
 
   showPasswordPath = {
     show: '../assets/icons/show password.svg',
@@ -96,18 +101,33 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.usersService
-      .authenticatedLogin(this.loginForm.value)
-      .subscribe((response) => {
+    this.usersService.authenticatedLogin(this.loginForm.value).subscribe(
+      (response) => {
         this.router.navigate(['/home-page']);
         this.usersService.storeToken(response.token);
-      });
+        this.openSnackBar(response.message);
+      },
+      (error) => {
+        this.openSnackBar(error.error.message);
+      }
+    );
   }
+
   openForgetDialog() {
     this.dialog.openForgetPasswordDialog();
   }
 
-  ngOnInit(): void {
-    console.log(this.usersService.isLoggedIn());
+  openSnackBar(message: string) {
+    this._snackBar.openFromComponent(NotificationToastComponent, {
+      data: {
+        message: message,
+      },
+      panelClass: ['snackbar-success'], // Adaugă clasa de stil
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
   }
+
+  ngOnInit(): void {}
 }

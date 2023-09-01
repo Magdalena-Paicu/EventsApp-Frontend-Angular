@@ -33,6 +33,7 @@ import { EventPageDetailsComponent } from './components/event-page-details/event
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NgToastModule } from 'ng-angular-popup';
 import { ForgetPasswordDialogComponent } from './shared/components/forget-password-dialog/forget-password-dialog.component';
+import { ResetPasswordComponent } from './shared/components/reset-password/reset-password/reset-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { ForgetPasswordDialogComponent } from './shared/components/forget-passwo
     RecoverAccountComponent,
     EventPageDetailsComponent,
     ForgetPasswordDialogComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

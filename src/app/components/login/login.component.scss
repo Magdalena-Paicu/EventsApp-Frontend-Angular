@@ -42,7 +42,7 @@
 
 .img-ness {
   width: 45%;
-  margin-top: 45%;
+  margin-top: 25%;
   margin-left: 25%;
 }
 .text {
@@ -99,24 +99,20 @@ button:disabled {
   background-color: rgb(148, 148, 148);
   border-color: rgb(35, 35, 35);
 }
-
 button:not(:disabled) {
   background-color: #8102ae;
   border-color: #8102ae;
 }
-
 button:not(:disabled):hover {
   background-color: #8102ae;
   color: white;
   cursor: pointer;
 }
-
 .material-icons {
   position: relative;
   right: 30px;
   top: 5px;
 }
-
 .input-name {
   border: 1px solid rgb(0, 0, 0); /* add border */
   border-radius: 5px; /* round the corners */
@@ -124,18 +120,15 @@ button:not(:disabled):hover {
   width: 17rem;
   margin-top: 5px;
 }
-
 .Forms {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-left: 2rem;
 }
-
 .email-wrapper {
   margin-bottom: 1.5rem;
 }
-
 .label {
   font-size: 14px;
   margin-top: 5px;
@@ -143,7 +136,6 @@ button:not(:disabled):hover {
   font-weight: bold;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
 .password-icon {
   position: absolute;
   right: 3.5rem;
@@ -169,4 +161,7 @@ button:not(:disabled):hover {
 .forget-password {
   margin-left: 30%;
   cursor: pointer;
+}
+.snackbar-success {
+  justify-content: flex-end;
 }

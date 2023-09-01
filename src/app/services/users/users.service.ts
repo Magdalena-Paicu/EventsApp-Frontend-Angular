@@ -20,8 +20,8 @@ export class UsersService {
     return this.http.post<User>(this.baseApiUrl + '/api/Users/register', user);
   }
 
-  authenticatedLogin(user: User): Observable<User> {
-    return this.http.post<User>(
+  authenticatedLogin(user: any): Observable<any> {
+    return this.http.post<any>(
       this.baseApiUrl + '/api/Users/authenticate',
       user
     );
