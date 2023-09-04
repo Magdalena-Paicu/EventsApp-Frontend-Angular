@@ -6,7 +6,6 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { NotificationToastComponent } from 'src/app/shared/components/notification-toast/notification-toast.component';
 import { ResetPasswordService } from 'src/app/services/reset-password/reset-password.service';
 
 @Component({
@@ -117,17 +116,7 @@ export class LoginComponent implements OnInit {
     this.dialog.openForgetPasswordDialog();
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.openFromComponent(NotificationToastComponent, {
-      data: {
-        message: message,
-      },
-      panelClass: ['snackbar-success'], // Adaugă clasa de stil
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
-  }
+  openSnackBar(message: string) {}
 
   ngOnInit(): void {}
 }

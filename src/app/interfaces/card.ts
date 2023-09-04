@@ -1,9 +1,12 @@
+import { SafeUrl } from '@angular/platform-browser';
+import { SafeSubscriber } from 'rxjs/internal/Subscriber';
+
 export interface Card {
   id: number;
   title: string;
   location: string;
   author: string;
-  imageURL: string;
+  imageUrl: string;
   startDateTime: Date;
   endDateTime: Date;
   duration: Date;
@@ -16,4 +19,5 @@ export interface Card {
   isFree: boolean;
   isDraft: boolean;
   isFavorite: boolean;
+  imgSrc: SafeUrl;
 }

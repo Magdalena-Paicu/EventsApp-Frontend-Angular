@@ -9,6 +9,7 @@ import { ImagesService } from 'src/app/services/images/images.service';
 import { NavbarService } from 'src/app/services/navbar-service/navbar.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { EventsService } from 'src/app/services/events/events.service';
 
 @Component({
   selector: 'app-event-cards',
@@ -23,18 +24,9 @@ export class EventCardsComponent implements OnChanges, OnInit {
     private cardsServices: CardsService,
     private imageUpload: ImagesService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private eventService: EventsService
   ) {
-    // this.searchSubscription = this.searchCardsService.searchSubject$.subscribe(
-    //   (param: string) => {
-    //     this.searchEvents(param);
-    //   }
-    // );
-    // this.searchSubscription =
-    //   this.searchCardsService.searchDateSubject$.subscribe((param: Date) => {
-    //     this.searchEventsDate(param);
-    //   });
-
     this.subscriptionFavorite =
       this.navbarService.isFavoriteClickedObservable.subscribe(
         (clicked: boolean) => {
@@ -58,54 +50,12 @@ export class EventCardsComponent implements OnChanges, OnInit {
     'To add events to your favorites list,please log in to your account, or create one.';
   private subscriptionFavorite: Subscription;
   images: UploadFile[];
-  imageSrc: SafeUrl;
-
-  searchEvents(param: string) {
-    if (param) {
-      if (this.selectedCards === 'all-events') {
-        this.searchEventsCards = this.eventsAll.filter((event: any) => {
-          const eventTitle = event.titlu.toLowerCase();
-          return eventTitle.includes(param.toLowerCase());
-        });
-      } else {
-        this.searchEventsCards = this.myEvents.filter((event: any) => {
-          const eventTitle = event.titlu.toLowerCase();
-          return eventTitle.includes(param.toLowerCase());
-        });
-      }
-    } else {
-      if (this.selectedCards === 'all-events') {
-        this.searchEventsCards = this.eventsAll;
-      } else {
-        this.searchEventsCards = this.myEvents;
-      }
-    }
-  }
-
-  searchEventsDate(param: Date) {
-    if (param) {
-      if (this.selectedCards === 'all-events') {
-        this.searchEventsCards = this.eventsAll.filter((event: any) => {
-          const eventDate = event.data.toLowerCase();
-          return eventDate.includes(param);
-        });
-      } else {
-        this.searchEventsCards = this.myEvents.filter((event: any) => {
-          const eventDate = event.titlu.toLowerCase();
-          return eventDate.includes(param);
-        });
-      }
-    } else {
-      if (this.selectedCards === 'all-events') {
-        this.searchEventsCards = this.eventsAll;
-      } else {
-        this.searchEventsCards = this.myEvents;
-      }
-    }
-  }
+  imgSrc: SafeUrl;
+  mostPopular: Card[];
+  eventsAll: Card[];
+  myEvents: Card[] = this.cardsServices.getMyCards();
 
   ngOnDestroy() {
-    // this.searchSubscription.unsubscribe();
     this.subscriptionFavorite.unsubscribe();
   }
 
@@ -135,35 +85,15 @@ export class EventCardsComponent implements OnChanges, OnInit {
     event.isFavorite = !event.isFavorite;
   }
 
-  eventsAll: Card[] = this.cardsServices.getCards();
-  myEvents: Card[] = this.cardsServices.getMyCards();
-  mostPopular: Card[] = this.cardsServices.getMostPopularCards();
   favoriteEvents: Card[] = this.cardsServices
     .getCards()
     .filter((card) => card.isFavorite === true && !this.hasPassed(card));
 
-  // eventsAll: any[] = [];
-  // myevents = {
-  //   myevents: [],
-  // };
-
-  // loadImages() {
-  //   this.imageUpload.getAllImages().subscribe((data) => {
-  //     this.images = data;
-  //     console.log(this.images);
-  //   });
-  // }
-
-  loadImageByName(fileName: string) {
-    this.imageUpload.getImagebyName(fileName).subscribe(
-      (blob: Blob) => {
-        const objectUrl = URL.createObjectURL(blob);
-        this.imageSrc = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
-      },
-      (error) => {
-        console.error('A apărut o eroare la obținerea imaginii:', error);
-      }
-    );
+  loadImages() {
+    this.imageUpload.getAllImages().subscribe((data) => {
+      this.images = data;
+      console.log(this.images);
+    });
   }
 
   navigateToEventDetail(eventId: number) {
@@ -171,9 +101,13 @@ export class EventCardsComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    this.eventService.getAllEventsWithImages().subscribe((events) => {
+      this.eventsAll = events;
+      this.mostPopular = events;
+    });
+
     this.selectedCards = 'all-events';
     this.isConfirmed = this.authService.isConfirm;
     this.isAdmin = this.authService.isAdmin;
-    // this.loadImageByName('me&bro');
   }
 }

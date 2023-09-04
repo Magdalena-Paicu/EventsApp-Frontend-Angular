@@ -12,7 +12,7 @@
               'grid-container__event-card__container__image__haspassed':
                 hasPassed(event)
             }"
-            [src]="event.imageURL"
+            [src]="event.imgSrc"
             (click)="navigateToEventDetail(event.id)"
           />
           <div
@@ -35,7 +35,7 @@
 
           <div class="grid-container__event-card__container__text">
             <p class="grid-container__event-card__container__text__p1">
-              {{ event.startDateTime | formatDate | uppercase }}
+              {{ event.startDateTime }}
             </p>
             <p class="grid-container__event-card__container__text__p2">
               {{ event.title }}
@@ -53,10 +53,7 @@
     Best match for you
   </p>
   <div class="grid-container">
-    <div
-      class="grid-container__event-card"
-      *ngFor="let event of searchEventsCards"
-    >
+    <div class="grid-container__event-card" *ngFor="let event of eventsAll">
       <div class="grid-container__event-card__container">
         <img
           class="grid-container__event-card__container__image"
@@ -64,7 +61,7 @@
             'grid-container__event-card__container__image__haspassed':
               hasPassed(event)
           }"
-          [src]="event.imageURL"
+          [src]="event.imgSrc"
           (click)="navigateToEventDetail(event.id)"
         />
         <div class="grid-container__event-card__container__buttons-login">
@@ -206,7 +203,7 @@
           'grid-container__event-card__container__image__haspassed':
             hasPassed(event)
         }"
-        [src]="event.imageURL"
+        [src]="event.imgSrc"
       />
 
       <div
