@@ -5,11 +5,10 @@ import { UploadFile } from 'src/app/interfaces/upload-file';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { CardsService } from 'src/app/services/cards/cards.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
-import { ImagesService } from 'src/app/services/images/images.service';
 import { NavbarService } from 'src/app/services/navbar-service/navbar.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { EventsService } from 'src/app/services/events/events.service';
+import { SearchService } from 'src/app/services/search-service/search.service';
 
 @Component({
   selector: 'app-event-cards',
@@ -22,10 +21,9 @@ export class EventCardsComponent implements OnChanges, OnInit {
     private authService: AuthService,
     private navbarService: NavbarService,
     private cardsServices: CardsService,
-    private imageUpload: ImagesService,
-    private sanitizer: DomSanitizer,
     private router: Router,
-    private eventService: EventsService
+    private eventService: EventsService,
+    private searchService: SearchService
   ) {
     this.subscriptionFavorite =
       this.navbarService.isFavoriteClickedObservable.subscribe(
@@ -50,10 +48,12 @@ export class EventCardsComponent implements OnChanges, OnInit {
     'To add events to your favorites list,please log in to your account, or create one.';
   private subscriptionFavorite: Subscription;
   images: UploadFile[];
-  imgSrc: SafeUrl;
   mostPopular: Card[];
   eventsAll: Card[];
   myEvents: Card[] = this.cardsServices.getMyCards();
+  isFree: boolean = false;
+  withTicket: boolean = false;
+  searchValue: string = '';
 
   ngOnDestroy() {
     this.subscriptionFavorite.unsubscribe();
@@ -89,21 +89,46 @@ export class EventCardsComponent implements OnChanges, OnInit {
     .getCards()
     .filter((card) => card.isFavorite === true && !this.hasPassed(card));
 
-  loadImages() {
-    this.imageUpload.getAllImages().subscribe((data) => {
-      this.images = data;
-      console.log(this.images);
-    });
-  }
-
   navigateToEventDetail(eventId: number) {
     this.router.navigate(['event-details/', eventId]);
   }
+  filterByFree() {
+    this.eventService.searchFreeEvents(this.isFree).subscribe((events) => {
+      this.eventsAll = events;
+    });
+  }
+  filteredWithTicket() {
+    this.eventService
+      .searchWithTicketEvents(this.withTicket)
+      .subscribe((events) => {
+        this.eventsAll = events;
+      });
+  }
 
+  filteredByTitle() {
+    this.eventService
+      .searchEventsByTitle(this.searchValue)
+      .subscribe((events) => {
+        this.eventsAll = events;
+      });
+  }
   ngOnInit(): void {
     this.eventService.getAllEventsWithImages().subscribe((events) => {
       this.eventsAll = events;
-      this.mostPopular = events;
+      this.mostPopular = events.slice(2, 6);
+    });
+
+    this.searchService.searchSubjectFreeEvents$.subscribe((value) => {
+      this.isFree = value;
+      this.filterByFree();
+    });
+    this.searchService.searchSubjectWithTicketEvents$.subscribe((value) => {
+      this.withTicket = value;
+      this.filteredWithTicket();
+    });
+    this.searchService.searchSubjectByTitle$.subscribe((value) => {
+      this.searchValue = value;
+      this.filteredByTitle();
     });
 
     this.selectedCards = 'all-events';

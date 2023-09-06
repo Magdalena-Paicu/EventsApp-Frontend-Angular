@@ -55,13 +55,23 @@
         <div class="options-box-v2">
           <div class="event-type"><p>Free</p></div>
           <div class="event-checkbox">
-            <input class="event-checkbox-input" type="checkbox" />
+            <input
+              class="event-checkbox-input"
+              type="checkbox"
+              [(ngModel)]="isFree"
+              (change)="changeIsFree()"
+            />
           </div>
         </div>
         <div class="options-box-v2">
           <div class="event-type-with-ticket"><p>With ticket</p></div>
           <div class="event-checkbox">
-            <input class="event-checkbox-input" type="checkbox" />
+            <input
+              class="event-checkbox-input"
+              type="checkbox"
+              [(ngModel)]="isWithTicket"
+              (change)="changeWithTicket()"
+            />
           </div>
         </div>
       </div>

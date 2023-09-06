@@ -23,45 +23,15 @@ export class NavbarComponent implements OnInit {
   imageSrc: SafeUrl;
   users: User[] = [];
 
-  // private isConfirmedSubscription: Subscription;
-  // private isAdminSubscription: Subscription;
-
   constructor(
     private searchCardsService: SearchService,
     private dialogService: DialogService,
     private router: Router,
     private navbarService: NavbarService,
     private userService: UsersService
-  ) {
-    // this.isConfirmedSubscription = this.authService
-    //   .isConfirmObservable()
-    //   .subscribe((isConfirmed: boolean) => {
-    //     this.isConfirmed = isConfirmed;
-    //   });
-    // this.isAdminSubscription = this.authService
-    //   .isAdminObservable()
-    //   .subscribe((isAdmin: boolean) => {
-    //     this.isAdmin = isAdmin;
-    //   });
-  }
+  ) {}
 
-  ngOnInit(): void {
-    this.isConfirmed = this.userService.isLoggedIn();
-    // this.userService.getAllUsers().subscribe((value) => {
-    //   this.users = value;
-    //   console.log(this.users);
-    // });
-    // this.userService.searchUser(this.searchCards).subscribe((data) => {
-    //   this.matchingUser = data;
-    //   console.log(this.matchingUser);
-    // });
-    // this.authService.isAdminObservable().subscribe((isAdmin) => {
-    //   this.isAdmin = isAdmin;
-    // });
-    // this.authService.isConfirmObservable().subscribe((isConfirmed) => {
-    //   this.isConfirmed = isConfirmed;
-    // });
-  }
+  ngOnInit(): void {}
 
   mouseEnterProfile() {
     this.clickprofile = true;
@@ -72,12 +42,8 @@ export class NavbarComponent implements OnInit {
   }
 
   sendSearchCards() {
-    this.searchCardsService.search(this.searchCards);
-
-    this.userService.searchUser(this.searchCards).subscribe((data) => {
-      this.matchingUser = data;
-      console.log(this.matchingUser);
-    });
+    this.searchCardsService.searchEventByTitle(this.searchCards);
+    console.log(this.searchCards);
   }
   openModal() {
     this.dialogService.openMyAccountDialog();
@@ -92,11 +58,6 @@ export class NavbarComponent implements OnInit {
   register() {
     this.router.navigate(['create-account']);
   }
-
-  // ngOnDestroy() {
-  //   this.isConfirmedSubscription.unsubscribe();
-  //   this.isAdminSubscription.unsubscribe();
-  // }
 
   onFavoriteHomeClick() {
     this.clickFavorite = !this.clickFavorite;

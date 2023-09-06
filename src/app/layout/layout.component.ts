@@ -14,7 +14,8 @@ import { DialogService } from '../services/dialog-service/dialog.service';
 export class LayoutComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private searchService: SearchService
   ) {}
 
   selectedToggle: string = 'all-events';
@@ -26,7 +27,15 @@ export class LayoutComponent implements OnInit {
   @ViewChild('picker') picker: MatDatepicker<any>;
   isAdmin: boolean = false;
   isConfirmed: boolean = false;
+  isFree: boolean = false;
+  isWithTicket: boolean = false;
 
+  changeIsFree() {
+    this.searchService.searchFreeEvents(this.isFree);
+  }
+  changeWithTicket() {
+    this.searchService.searchEventsWithTicket(this.isWithTicket);
+  }
   onSelectedCardsView(view: string) {
     this.selectedCards = view;
   }

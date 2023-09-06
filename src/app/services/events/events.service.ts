@@ -4,7 +4,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Card } from 'src/app/interfaces/card';
 import { ImagesService } from '../images/images.service';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, take, takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
@@ -43,5 +43,23 @@ export class EventsService {
 
   getEventById(idEvent: string): Observable<Card> {
     return this.http.get<Card>(this.baseApiUrl + '/api/Events/' + idEvent);
+  }
+
+  searchFreeEvents(free: boolean): Observable<Card[]> {
+    return this.http.get<Card[]>(
+      this.baseApiUrl + '/api/Search/searchIsFree?isFree=' + free
+    );
+  }
+
+  searchWithTicketEvents(withTicket: boolean): Observable<Card[]> {
+    return this.http.get<Card[]>(
+      `${this.baseApiUrl}/api/Search/searchWithTicket?withTicket=${withTicket}`
+    );
+  }
+
+  searchEventsByTitle(title: string): Observable<Card[]> {
+    return this.http.get<Card[]>(
+      `${this.baseApiUrl}/api/Search/searchByTitle?title=${title}`
+    );
   }
 }

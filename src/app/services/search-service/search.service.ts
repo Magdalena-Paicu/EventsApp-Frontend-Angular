@@ -7,17 +7,23 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class SearchService {
   constructor() {}
 
-  private searchSubject = new Subject<string>();
-  public searchSubject$ = this.searchSubject.asObservable();
+  private searchSubjectByTitle = new Subject<string>();
+  public searchSubjectByTitle$ = this.searchSubjectByTitle.asObservable();
 
-  private searchDateSubject = new Subject<Date>();
-  public searchDateSubject$ = this.searchDateSubject.asObservable();
+  private searchSubjectFreeEvents = new Subject<boolean>();
+  public searchSubjectFreeEvents$ = this.searchSubjectFreeEvents.asObservable();
 
-  search(param: string) {
-    this.searchSubject.next(param);
+  private searchSubjectWithTicketEvents = new Subject<boolean>();
+  public searchSubjectWithTicketEvents$ =
+    this.searchSubjectWithTicketEvents.asObservable();
+
+  searchEventByTitle(title: string) {
+    this.searchSubjectByTitle.next(title);
   }
-
-  searchDate(date: Date) {
-    this.searchDateSubject.next(date);
+  searchFreeEvents(free: boolean) {
+    this.searchSubjectFreeEvents.next(free);
+  }
+  searchEventsWithTicket(withTicket: boolean) {
+    this.searchSubjectWithTicketEvents.next(withTicket);
   }
 }

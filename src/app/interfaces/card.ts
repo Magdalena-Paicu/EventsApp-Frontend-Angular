@@ -1,5 +1,4 @@
 import { SafeUrl } from '@angular/platform-browser';
-import { SafeSubscriber } from 'rxjs/internal/Subscriber';
 
 export interface Card {
   id: number;
