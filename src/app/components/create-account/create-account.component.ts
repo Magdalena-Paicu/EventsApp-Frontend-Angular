@@ -186,7 +186,6 @@ export class CreateAccountComponent {
   addAcount(form: FormGroup) {
     this.usersService.registerUser(form.value).subscribe((value) => {
       // this.dialog.openEventPostedDialog();
-      console.log(value);
     });
   }
   openSnackBar(message: string, action: string) {

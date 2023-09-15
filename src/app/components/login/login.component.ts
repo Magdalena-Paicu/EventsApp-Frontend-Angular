@@ -6,7 +6,7 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { ResetPasswordService } from 'src/app/services/reset-password/reset-password.service';
+import { UserStoreService } from 'src/app/services/user-store/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private usersService: UsersService,
     private dialog: DialogService,
-    private _snackBar: MatSnackBar,
-    private resetService: ResetPasswordService
+    private userStore: UserStoreService,
+    private userService: UsersService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -104,7 +104,9 @@ export class LoginComponent implements OnInit {
       (response) => {
         this.router.navigate(['/home-page']);
         this.usersService.storeToken(response.token);
-        this.openSnackBar(response.message);
+        let tokenPayload = this.userService.decodedToken();
+        this.userStore.setMailFromStore(tokenPayload.email);
+        this.userStore.setRoleFromStore(tokenPayload.role);
       },
       (error) => {
         this.openSnackBar(error.error.message);

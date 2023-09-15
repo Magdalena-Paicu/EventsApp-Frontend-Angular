@@ -28,7 +28,6 @@ export class HomePageComponent implements OnInit {
   loadImages(): void {
     this.imageUpload.getAllImages().subscribe((data: any[]) => {
       this.images = data.map((image) => image.imageUrl);
-      console.log(data);
     });
   }
 

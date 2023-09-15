@@ -6,7 +6,6 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthGuard } from 'src/app/components/guards/auth.guard';
 import { UsersService } from 'src/app/services/users/users.service';
 
 @Injectable()
@@ -18,7 +17,11 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const myToken = this.userService.getToken();
-
+    if (myToken) {
+      request = request.clone({
+        setHeaders: { Authorization: `Bearer ${myToken}` },
+      });
+    }
     return next.handle(request);
   }
 }

@@ -8,7 +8,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { IconModule } from './shared/icon/icon/icon.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './shared/material.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NgToastModule } from 'ng-angular-popup';
 import { ForgetPasswordDialogComponent } from './shared/components/forget-password-dialog/forget-password-dialog.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password/reset-password.component';
+import { TokenInterceptor } from './interceptors/token/token.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +79,7 @@ import { ResetPasswordComponent } from './shared/components/reset-password/reset
     DatePipe,
     FormatDatePipe,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

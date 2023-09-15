@@ -22,7 +22,5 @@ export class EventPageDetailsComponent implements OnInit {
       this.idParam = params.get('idEvent');
       this.event = this.cardService.getCardById(this.idParam);
     });
-    console.log(this.idParam);
-    console.log(this.event);
   }
 }

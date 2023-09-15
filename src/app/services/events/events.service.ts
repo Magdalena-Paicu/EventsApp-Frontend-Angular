@@ -6,6 +6,7 @@ import { Card } from 'src/app/interfaces/card';
 import { ImagesService } from '../images/images.service';
 import { switchMap, map, take, takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
+import { User } from 'src/app/interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +61,13 @@ export class EventsService {
   searchEventsByTitle(title: string): Observable<Card[]> {
     return this.http.get<Card[]>(
       `${this.baseApiUrl}/api/Search/searchByTitle?title=${title}`
+    );
+  }
+
+  addToFavorite(event: Card): Observable<Card> {
+    return this.http.post<Card>(
+      `${this.baseApiUrl}/api/users/add-favorite/${event.id}`,
+      event
     );
   }
 }

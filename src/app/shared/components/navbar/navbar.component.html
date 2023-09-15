@@ -3,7 +3,7 @@
     <img src="./assets/img/logo-timisoara-2023.png" />
   </div>
   <button
-    [disabled]="isAdmin"
+    [disabled]="role === 'Administrator'"
     class="home-div"
     [ngClass]="{ 'favorite-active': !clickFavorite }"
     (click)="onFavoriteHomeClick()"
@@ -23,15 +23,15 @@
   <div
     class="favorite-div"
     [ngClass]="{ 'favorite-active': clickFavorite }"
-    *ngIf="!isAdmin"
+    *ngIf="role === 'User'"
   >
     <mat-icon class="favorite-icon" svgIcon="heart"></mat-icon>
     <div class="favorite" (click)="onFavoriteHomeClick()">Favorite</div>
   </div>
   <div
     [ngClass]="{
-      'profile profile-div': !isAdmin,
-      'profile profile-div-isAdmin': isAdmin
+      'profile profile-div': role === 'User',
+      'profile profile-div-isAdmin': role === 'Administrator'
     }"
     (mouseenter)="mouseEnterProfile()"
   >
@@ -56,12 +56,16 @@
       (input)="sendSearchCards()"
     />
   </div>
-  <div *ngIf="!isAdmin && !isConfirmed" class="login-div" (click)="login()">
+  <div
+    *ngIf="role === 'User' && !isConfirmed"
+    class="login-div"
+    (click)="login()"
+  >
     LOGIN
   </div>
   <div>
     <button
-      *ngIf="!isAdmin && !isConfirmed"
+      *ngIf="role === 'User' && !isConfirmed"
       class="btn btn-primary"
       (click)="register()"
     >
@@ -80,20 +84,21 @@
   >
     Register
   </div>
+
   <div
     *ngIf="clickprofile && isConfirmed"
     (click)="openModal()"
     [ngClass]="{
-      'my-account': !isAdmin,
-      'my-account-isAdmin': isAdmin
+      'my-account': role === 'User',
+      'my-account-isAdmin': role === 'Administrator'
     }"
   >
     My Account
   </div>
   <div
     [ngClass]="{
-      'button2-logout': !isAdmin,
-      'button2-logout-isAdmin': isAdmin
+      'button2-logout': role === 'User',
+      'button2-logout-isAdmin': role === 'Administrator'
     }"
     *ngIf="clickprofile && isConfirmed"
     (click)="logout()"

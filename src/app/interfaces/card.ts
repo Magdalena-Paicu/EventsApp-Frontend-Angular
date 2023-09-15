@@ -17,6 +17,5 @@ export interface Card {
   isKidFriendly: boolean;
   isFree: boolean;
   isDraft: boolean;
-  isFavorite: boolean;
   imgSrc: SafeUrl;
 }

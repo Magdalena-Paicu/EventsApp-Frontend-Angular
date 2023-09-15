@@ -4,6 +4,8 @@ import { ViewEncapsulation } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { AuthService } from '../services/auth-services/auth.service';
 import { DialogService } from '../services/dialog-service/dialog.service';
+import { UserStoreService } from '../services/user-store/user-store.service';
+import { UsersService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-layout',
@@ -13,7 +15,8 @@ import { DialogService } from '../services/dialog-service/dialog.service';
 })
 export class LayoutComponent implements OnInit {
   constructor(
-    private authService: AuthService,
+    private userStore: UserStoreService,
+    private userService: UsersService,
     private dialogService: DialogService,
     private searchService: SearchService
   ) {}
@@ -21,11 +24,10 @@ export class LayoutComponent implements OnInit {
   selectedToggle: string = 'all-events';
   selectedDate: Date = new Date();
   selectedCards: string = 'all-events';
-  isLogin = 'false';
   isOpen: boolean = false;
   isSelectedDate: boolean = false;
   @ViewChild('picker') picker: MatDatepicker<any>;
-  isAdmin: boolean = false;
+  role: string = '';
   isConfirmed: boolean = false;
   isFree: boolean = false;
   isWithTicket: boolean = false;
@@ -119,7 +121,10 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userStore.getRoleFromStore().subscribe((value) => {
+      let role = this.userService.getRoleFromToken();
+      this.role = value || role;
+    });
     this.selectedCards = this.selectedToggle;
-    this.isAdmin = this.authService.isAdmin;
   }
 }

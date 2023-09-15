@@ -1,3 +1,5 @@
+import { Card } from './card';
+
 export interface User {
   email: string;
   username: string;
@@ -5,4 +7,5 @@ export interface User {
   is_admin: boolean;
   is_confirmed: boolean;
   token: string;
+  favoriteEvents: Card[];
 }

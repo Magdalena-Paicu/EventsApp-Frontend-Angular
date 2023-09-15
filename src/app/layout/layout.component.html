@@ -76,7 +76,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="isAdmin">
+    <div *ngIf="role === 'Administrator'">
       <div class="event-status-title"><h2>Event Status</h2></div>
       <div class="options-box">
         <div class="options-box-v2">
@@ -100,18 +100,18 @@
       </div>
     </div>
     <div
-      [ngClass]="{ 'logo-ness-academy-admin': isAdmin }"
+      [ngClass]="{ 'logo-ness-academy-admin': role === 'Administrator' }"
       class="logo-ness-academy"
     >
       <img src="./assets/img/logo-ness.png" />
     </div>
   </div>
 
-  <div class="right" [ngClass]="{ 'right-admin': isAdmin }">
+  <div class="right" [ngClass]="{ 'right-admin': role === 'Administrator' }">
     <!-- <div *ngFor="let event of eventsDeleted"> {{ event }}</div> -->
     <div class="content-navbar">
       <mat-button-toggle-group
-        *ngIf="isAdmin"
+        *ngIf="role === 'Administrator'"
         class="toggle-button-group"
         [(ngModel)]="selectedToggle"
       >
@@ -133,7 +133,7 @@
         >
       </mat-button-toggle-group>
       <button
-        *ngIf="isAdmin"
+        *ngIf="role === 'Administrator'"
         class="button-add-event"
         (click)="openNewEventDialog()"
       >

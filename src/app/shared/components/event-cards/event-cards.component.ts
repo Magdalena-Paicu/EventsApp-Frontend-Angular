@@ -2,13 +2,14 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Card } from 'src/app/interfaces/card';
 import { UploadFile } from 'src/app/interfaces/upload-file';
-import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { CardsService } from 'src/app/services/cards/cards.service';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { NavbarService } from 'src/app/services/navbar-service/navbar.service';
 import { Router } from '@angular/router';
 import { EventsService } from 'src/app/services/events/events.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { UserStoreService } from 'src/app/services/user-store/user-store.service';
 
 @Component({
   selector: 'app-event-cards',
@@ -18,12 +19,13 @@ import { SearchService } from 'src/app/services/search-service/search.service';
 export class EventCardsComponent implements OnChanges, OnInit {
   constructor(
     private dialogService: DialogService,
-    private authService: AuthService,
     private navbarService: NavbarService,
     private cardsServices: CardsService,
     private router: Router,
     private eventService: EventsService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private userService: UsersService,
+    private userStore: UserStoreService
   ) {
     this.subscriptionFavorite =
       this.navbarService.isFavoriteClickedObservable.subscribe(
@@ -35,7 +37,7 @@ export class EventCardsComponent implements OnChanges, OnInit {
 
   isFavorite: boolean = false;
   isConfirmed: boolean = false;
-  isAdmin: boolean = false;
+  role!: string;
   isFavoriteClicked: boolean = false;
   isHomeClicked: boolean = false;
   @Input() selectedCards: string = 'my-events';
@@ -54,6 +56,7 @@ export class EventCardsComponent implements OnChanges, OnInit {
   isFree: boolean = false;
   withTicket: boolean = false;
   searchValue: string = '';
+  favoriteEvents: Card[] = [];
 
   ngOnDestroy() {
     this.subscriptionFavorite.unsubscribe();
@@ -82,12 +85,9 @@ export class EventCardsComponent implements OnChanges, OnInit {
   }
 
   addToFavorite(event: any) {
-    event.isFavorite = !event.isFavorite;
+    this.eventService.addToFavorite(event);
+    console.log('evenimentul s-a adaugat!');
   }
-
-  favoriteEvents: Card[] = this.cardsServices
-    .getCards()
-    .filter((card) => card.isFavorite === true && !this.hasPassed(card));
 
   navigateToEventDetail(eventId: number) {
     this.router.navigate(['event-details/', eventId]);
@@ -113,6 +113,14 @@ export class EventCardsComponent implements OnChanges, OnInit {
       });
   }
   ngOnInit(): void {
+    this.selectedCards = 'all-events';
+    this.isConfirmed = this.userService.isLoggedIn();
+
+    this.userStore.getRoleFromStore().subscribe((val) => {
+      this.role = val;
+      console.log(this.role);
+    });
+
     this.eventService.getAllEventsWithImages().subscribe((events) => {
       this.eventsAll = events;
       this.mostPopular = events.slice(2, 6);
@@ -130,9 +138,5 @@ export class EventCardsComponent implements OnChanges, OnInit {
       this.searchValue = value;
       this.filteredByTitle();
     });
-
-    this.selectedCards = 'all-events';
-    this.isConfirmed = this.authService.isConfirm;
-    this.isAdmin = this.authService.isAdmin;
   }
 }
