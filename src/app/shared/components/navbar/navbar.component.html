@@ -30,7 +30,7 @@
   </div>
   <div
     [ngClass]="{
-      'profile profile-div': role === 'User',
+      'profile profile-div': role === 'User' || !isConfirmed,
       'profile profile-div-isAdmin': role === 'Administrator'
     }"
     (mouseenter)="mouseEnterProfile()"

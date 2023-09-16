@@ -18,4 +18,5 @@ export interface Card {
   isFree: boolean;
   isDraft: boolean;
   imgSrc: SafeUrl;
+  isFavorite: boolean;
 }

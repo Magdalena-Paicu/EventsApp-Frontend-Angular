@@ -23,13 +23,15 @@
               *ngIf="!isFavorite"
               class="grid-container__event-card__container__buttons-user__icon-no-like"
               svgIcon="no_like"
-              (click)="!isConfirmed ? openModal() : addToFavorite(event)"
+              (click)="
+                !isConfirmed ? openModal() : addEventToFavorite(event.id)
+              "
             ></mat-icon>
             <mat-icon
               *ngIf="isFavorite"
               class="grid-container__event-card__container__buttons-user__icon-like"
               svgIcon="liked"
-              (click)="addToFavorite(event)"
+              (click)="addEventToFavorite(event.id)"
             ></mat-icon>
           </div>
 
@@ -127,16 +129,16 @@
             svgIcon="free_tag"
           ></mat-icon>
           <mat-icon
-            *ngIf="!isFavorite"
+            *ngIf="!event.isFavorite"
             class="grid-container__event-card__container__buttons-user__icon-no-like"
             svgIcon="no_like"
-            (click)="addToFavorite(event)"
+            (click)="addEventToFavorite(event.id)"
           ></mat-icon>
           <mat-icon
-            *ngIf="isFavorite"
+            *ngIf="event.isFavorite"
             class="grid-container__event-card__container__buttons-user__icon-like"
             svgIcon="liked"
-            (click)="addToFavorite(event)"
+            (click)="addEventToFavorite(event.id)"
           ></mat-icon>
         </div>
 
@@ -216,7 +218,7 @@
           *ngIf="isFavorite"
           class="grid-container__event-card__container__buttons-user__icon-no-like"
           svgIcon="no_like"
-          (click)="addToFavorite(event)"
+          (click)="addEventToFavorite(event.id)"
         ></mat-icon>
         <mat-icon
           *ngIf="isFavorite"

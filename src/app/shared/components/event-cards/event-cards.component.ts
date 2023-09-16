@@ -10,6 +10,7 @@ import { EventsService } from 'src/app/services/events/events.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserStoreService } from 'src/app/services/user-store/user-store.service';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-event-cards',
@@ -57,6 +58,7 @@ export class EventCardsComponent implements OnChanges, OnInit {
   withTicket: boolean = false;
   searchValue: string = '';
   favoriteEvents: Card[] = [];
+  users: User[] = [];
 
   ngOnDestroy() {
     this.subscriptionFavorite.unsubscribe();
@@ -84,19 +86,16 @@ export class EventCardsComponent implements OnChanges, OnInit {
     this.dialogService.openDeletingEventDialog();
   }
 
-  addToFavorite(event: any) {
-    this.eventService.addToFavorite(event);
-    console.log('evenimentul s-a adaugat!');
-  }
-
   navigateToEventDetail(eventId: number) {
     this.router.navigate(['event-details/', eventId]);
   }
+
   filterByFree() {
     this.eventService.searchFreeEvents(this.isFree).subscribe((events) => {
       this.eventsAll = events;
     });
   }
+
   filteredWithTicket() {
     this.eventService
       .searchWithTicketEvents(this.withTicket)
@@ -112,7 +111,19 @@ export class EventCardsComponent implements OnChanges, OnInit {
         this.eventsAll = events;
       });
   }
+
+  addEventToFavorite(id: number) {
+    let event: Card = this.eventsAll.find((event) => event.id == id);
+    this.eventService.addToFavorite(event).subscribe((val) => {
+      this.favoriteEvents.push(event);
+      event.isFavorite = true;
+    });
+  }
+
   ngOnInit(): void {
+    this.eventService.getFavoriteEvents().subscribe((val) => {
+      this.favoriteEvents = val;
+    });
     this.selectedCards = 'all-events';
     this.isConfirmed = this.userService.isLoggedIn();
 
@@ -122,8 +133,15 @@ export class EventCardsComponent implements OnChanges, OnInit {
     });
 
     this.eventService.getAllEventsWithImages().subscribe((events) => {
-      this.eventsAll = events;
-      this.mostPopular = events.slice(2, 6);
+      for (const event of events) {
+        this.eventService
+          .isElementFavorite(event.id)
+          .subscribe((isFavorite) => {
+            event.isFavorite = isFavorite;
+            this.eventsAll = events;
+            this.mostPopular = events.slice(2, 6);
+          });
+      }
     });
 
     this.searchService.searchSubjectFreeEvents$.subscribe((value) => {

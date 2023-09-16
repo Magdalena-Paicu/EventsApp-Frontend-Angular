@@ -66,8 +66,24 @@ export class EventsService {
 
   addToFavorite(event: Card): Observable<Card> {
     return this.http.post<Card>(
-      `${this.baseApiUrl}/api/users/add-favorite/${event.id}`,
+      `${this.baseApiUrl}/api/users/add-event/${event.id}`,
       event
+    );
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseApiUrl}/api/Users`);
+  }
+
+  getFavoriteEvents(): Observable<Card[]> {
+    return this.http.get<Card[]>(
+      `${this.baseApiUrl}/api/Users/get-favorite-events`
+    );
+  }
+
+  isElementFavorite(eventId: number) {
+    return this.http.get<boolean>(
+      `${this.baseApiUrl}/api/Users/is-element-favorite?eventId=${eventId}`
     );
   }
 }
