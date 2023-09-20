@@ -5,8 +5,8 @@ import { CreateAccountComponent } from './components/create-account/create-accou
 import { HomePageComponent } from './home-page/home-page.component';
 import { RecoverAccountComponent } from './components/recover-account/recover-account.component';
 import { EventPageDetailsComponent } from './components/event-page-details/event-page-details.component';
-import { AuthGuard } from './components/guards/auth.guard';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password/reset-password.component';
+import { MapsLocationComponent } from './components/maps/maps-location/maps-location.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'recover-account', component: RecoverAccountComponent },
   { path: 'event-details/:idEvent', component: EventPageDetailsComponent },
   { path: 'reset', component: ResetPasswordComponent },
+  { path: 'maps', component: MapsLocationComponent },
 ];
 
 @NgModule({

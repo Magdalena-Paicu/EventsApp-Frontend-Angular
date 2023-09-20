@@ -18,9 +18,15 @@ export class EventPageDetailsComponent implements OnInit {
   event: Card;
 
   ngOnInit(): void {
-    this.router.paramMap.subscribe((params: ParamMap) => {
-      this.idParam = params.get('idEvent');
-      this.event = this.cardService.getCardById(this.idParam);
-    });
+    // this.idParam = this.router.snapshot.paramMap.get('idEvent');
+    // console.log(this.idParam);
+
+    this.idParam = this.router.snapshot.params['idEvent'];
+    console.log(this.idParam);
   }
 }
+
+// this.router.params.subscribe((params) => {
+//   this.idParam = params['idEvent'];
+//   console.log(this.idParam);
+// });

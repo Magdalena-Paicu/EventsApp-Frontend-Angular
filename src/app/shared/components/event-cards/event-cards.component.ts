@@ -36,7 +36,6 @@ export class EventCardsComponent implements OnChanges, OnInit {
       );
   }
 
-  isFavorite: boolean = false;
   isConfirmed: boolean = false;
   role!: string;
   isFavoriteClicked: boolean = false;
@@ -62,6 +61,16 @@ export class EventCardsComponent implements OnChanges, OnInit {
 
   ngOnDestroy() {
     this.subscriptionFavorite.unsubscribe();
+  }
+
+  changeIsFavorite(event: Card) {
+    if (!event.isFavorite) {
+      this.addEventToFavorite(event.id);
+      event.isFavorite = !event.isFavorite;
+    } else {
+      this.deleteEventToFavorite(event.id);
+      event.isFavorite = !event.isFavorite;
+    }
   }
 
   ngOnChanges() {
@@ -117,20 +126,41 @@ export class EventCardsComponent implements OnChanges, OnInit {
     this.eventService.addToFavorite(event).subscribe((val) => {
       this.favoriteEvents.push(event);
       event.isFavorite = true;
+      this.eventService.updateFavoriteEventsList(this.favoriteEvents);
     });
   }
 
+  deleteEventToFavorite(id: number) {
+    let index = this.favoriteEvents.findIndex((event) => event.id === id);
+    if (index != -1) {
+      this.eventService.deleteEventFavorite(id).subscribe((event) => {
+        this.favoriteEvents.splice(index, 1);
+        event.isFavorite = false;
+        this.eventService.updateFavoriteEventsList(this.favoriteEvents);
+      });
+    }
+  }
+
+  addAndDeleteEvent(event: Card) {
+    if (event.isFavorite) {
+      this.addEventToFavorite(event.id);
+    } else {
+      this.deleteEventToFavorite(event.id);
+    }
+  }
+
   ngOnInit(): void {
-    this.eventService.getFavoriteEvents().subscribe((val) => {
-      this.favoriteEvents = val;
+    this.userStore.getRoleFromStore().subscribe((val) => {
+      let role = this.userService.getRoleFromToken();
+      this.role = val || role;
     });
+    if (this.role === 'User') {
+      this.eventService.getFavoriteEvents().subscribe((val) => {
+        this.favoriteEvents = val;
+      });
+    }
     this.selectedCards = 'all-events';
     this.isConfirmed = this.userService.isLoggedIn();
-
-    this.userStore.getRoleFromStore().subscribe((val) => {
-      this.role = val;
-      console.log(this.role);
-    });
 
     this.eventService.getAllEventsWithImages().subscribe((events) => {
       for (const event of events) {

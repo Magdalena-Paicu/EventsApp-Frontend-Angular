@@ -35,6 +35,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { ForgetPasswordDialogComponent } from './shared/components/forget-password-dialog/forget-password-dialog.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password/reset-password.component';
 import { TokenInterceptor } from './interceptors/token/token.interceptor';
+import { MapsLocationComponent } from './components/maps/maps-location/maps-location.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import { TokenInterceptor } from './interceptors/token/token.interceptor';
     EventPageDetailsComponent,
     ForgetPasswordDialogComponent,
     ResetPasswordComponent,
+    MapsLocationComponent,
   ],
   imports: [
     BrowserModule,

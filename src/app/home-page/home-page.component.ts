@@ -5,6 +5,7 @@ import { EventsService } from '../services/events/events.service';
 import { ImagesService } from '../services/images/images.service';
 import { UploadFile } from '../interfaces/upload-file';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -16,7 +17,8 @@ export class HomePageComponent implements OnInit {
     private userService: UsersService,
     private eventService: EventsService,
     public imageUpload: ImagesService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   users: User[] = [];
@@ -41,6 +43,16 @@ export class HomePageComponent implements OnInit {
         console.error('A apărut o eroare la obținerea imaginii:', error);
       }
     );
+  }
+  checkIsActive() {
+    const urlTree = this.router.createUrlTree(['/login']);
+    const isActive = this.router.isActive(urlTree, false);
+
+    if (isActive) {
+      console.log("The 'login' route is currently active.");
+    } else {
+      console.log("The 'login' route is no currently active.");
+    }
   }
 
   ngOnInit(): void {}

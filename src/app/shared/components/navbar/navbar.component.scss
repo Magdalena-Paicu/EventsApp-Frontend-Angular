@@ -87,6 +87,20 @@
   height: 40px;
   color: white;
 }
+.btn-primary-maps {
+  grid-column: 5;
+  display: flex;
+  justify-content: flex-start;
+  background: #8102ae;
+  border-radius: 66px;
+  margin-left: 50px;
+  --bs-btn-border-color: #8102ae;
+  --bs-btn-hover-border-color: #8102ae;
+  --bs-btn-active-bg: #8102ae;
+  width: 123px;
+  height: 40px;
+  color: white;
+}
 .img-logo-timisoara-2023 img {
   width: 184.88px;
   height: 74px;

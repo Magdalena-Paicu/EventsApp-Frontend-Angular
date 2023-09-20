@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   matchingUser: User[];
   imageSrc: SafeUrl;
   users: User[] = [];
+  frontendTitle: string = 'Title From Frontend';
 
   constructor(
     private searchCardsService: SearchService,
@@ -52,16 +53,20 @@ export class NavbarComponent implements OnInit {
   sendSearchCards() {
     this.searchCardsService.searchEventByTitle(this.searchCards);
   }
+
   openModal() {
     this.dialogService.openMyAccountDialog();
   }
+
   logout() {
     this.router.navigate(['login']);
     this.userService.clearToken();
   }
+
   login() {
-    this.router.navigate(['login']);
+    this.router.navigateByUrl('/login');
   }
+
   register() {
     this.router.navigate(['create-account']);
   }
@@ -72,5 +77,9 @@ export class NavbarComponent implements OnInit {
     this.clickHome = !this.clickHome;
     this.navbarService.emitClickFavorite(this.clickFavorite);
     this.navbarService.emitClickHome(this.clickHome);
+  }
+
+  goToMaps() {
+    this.router.navigate(['/maps']);
   }
 }

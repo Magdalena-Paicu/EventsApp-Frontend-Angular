@@ -56,22 +56,13 @@
       (input)="sendSearchCards()"
     />
   </div>
-  <div
-    *ngIf="role === 'User' && !isConfirmed"
-    class="login-div"
-    (click)="login()"
-  >
-    LOGIN
-  </div>
+  <div *ngIf="!isConfirmed" class="login-div" (click)="login()">LOGIN</div>
   <div>
-    <button
-      *ngIf="role === 'User' && !isConfirmed"
-      class="btn btn-primary"
-      (click)="register()"
-    >
+    <button *ngIf="!isConfirmed" class="btn btn-primary" (click)="register()">
       REGISTER
     </button>
   </div>
+  <!-- <div class="btn btn-primary-maps" (click)="goToMaps()">MAPS</div> -->
 </mat-toolbar>
 <div class="toolbar" (mouseleave)="mouseLeaveProfile()">
   <div class="button1" *ngIf="clickprofile && !isConfirmed" (click)="login()">
