@@ -25,6 +25,7 @@
     "bootstrap": "^5.2.3",
     "ng-angular-popup": "^0.4.7",
     "ngx-bootstrap": "^10.2.0",
+    "ngx-extended-pdf-viewer": "^18.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
